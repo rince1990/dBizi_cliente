@@ -21,59 +21,93 @@
     -->
   <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
   <link rel="stylesheet" type="text/css" href="css/index.css" />
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <title>Google Maps y PhoneGap</title>
-  <style>
-    #map-canvas,
-    #cargando_mapa {
-      margin: auto;
-      border-radius: 5px;
-      border-width: thin;
-      width: 95%;
-      height: 400px;
-    }
-  </style>
+
 </head>
 
 <body>
 
   <!-- MENU LATERAL -->
-  <div id="menuprincipal">
-    <div id="wrapperMenu">
-      <div class="scroller">
-        <div id="contenidoMenu">
-          <ul>
-            <li>Entrada de menu 1</li>
-            <li>Entrada de menu 2</li>
-            <li>Entrada de menu 3</li>
-          </ul>
+  <ul id="slide-out" class="side-nav">
+    <li>
+      <!--<div class="userView">
+        <div class="background">
+          <img src="images/office.jpg">
+        </div>
+        <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+        <a href="#!name"><span class="white-text name">John Doe</span></a>
+        <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+      </div>-->
+    </li>
+    <li><a href="index.html" class="waves-effect waves-blue"><!--<i class="material-icons">cloud</i>-->First Link With Icon</a></li>
+    <li><a href="index0.html" class="waves-effect waves-blue">Second Link With Waves</a></li>
+    <li><a href="index1.html" class="waves-effect waves-blue">Third Link With Waves</a></li>
+    <li><a href="index2.html" class="waves-effect waves-blue">third Link With Waves</a></li>
+  </ul>
+  <a href="#" data-activates="slide-out" class="button-collapse btn-floating btn-large waves-effect waves-light blue">
+    <i class="material-icons">&#xE5D2;</i>
+  </a>
+
+  <!--FIN MENU LATERAL -->
+  <div id="cuerpo" class="page centered">
+    <div class="container">
+      <div id="header">
+        <!--TODO borrar este header? -->
+        <div id="wrapper">
+          <div class="scroller">
+            <div id="contenidoCuerpo">
+              <!--<center>
+                <div id="debug">
+                  este es el debug
+                </div>
+              </center>-->
+              <!-- Preloader -->
+              <center>
+                <div id="preloader" class="preloader-wrapper big active">
+                  <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </center>
+              <!--  END Preloader -->
+              <!--  MAP -->
+              <div id="map-canvas"></div>
+              <!--  END MAP -->
+              <!--  Estacion cercana -->
+              <div class="row">
+                <div class="col s12">
+                  <div class="card blue darken-2">
+                    <div class="card-content white-text">
+                      <span class="card-title">Estación más cercana</span>
+                      <h4><p id="nombreCercana">Cargando...</p></h4>
+                      <p id="metrosCercana"></p>
+                      <p id="bicisCercana"></p>
+                      <p id="basesCercana"></p>
+                    </div>
+                    <div class="card-action">
+                      <a href="#" id="mostrarCercana">Mostrar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--  END Estacion cercana -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <!--FIN MENU LATERAL -->
-
-  <div id="cuerpo" class="page center">
-    <div id="header">
-      <div id="header">
-        <b></b>
-        <a id="menubtn" href="javascript:menu('menu');">
-          <div class="btn">MENU</div>
-        </a>
-        </b>
-      </div>
-      <div id="wrapper">
-        <div class="scroller">
-          <div id="contenidoCuerpo">
-            <h1>Google Maps y PhoneGap<h1>
-                          <div id="cargando_mapa">
-                            <div id="map-canvas"></div>
-                          </div>
-                  </div>
-
-      </div>
-    </div>
-  </div>
-</div>
 
 
 
@@ -84,6 +118,7 @@
   <script type="text/javascript" src="cordova.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
   <script charset="utf-8" type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
 
 </body>
