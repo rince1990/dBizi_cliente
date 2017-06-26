@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+
+  <meta http-equiv="Content-Security-Policy" content="default-src *;
+                                         style-src * 'self' 'unsafe-inline' 'unsafe-eval';
+                                         script-src * 'self' 'unsafe-inline';">
+  <link rel="stylesheet" type="text/css" href="css/index.css" />
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <title>Google Maps y PhoneGap</title>
+
+</head>
+
+<body>
+
+  <!-- MENU LATERAL -->
+  <ul id="slide-out" class="side-nav">
+    <li>
+      <!--<div class="userView">
+         <div class="background">
+          <img id="menuIcon" src="res\donostia-rock-chillida.jpg">
+        </div>--><br />
+       <a href="#!user"><img id="menuIcon" class="circle" src="res/icon.png"></a>
+        <!-- <a href="#!name"><span class="white-text name">John Doe</span></a>
+        <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a> -->
+      </div>
+    </li>
+    <br />
+    <li><a href="index.html" class="waves-effect waves-blue"><i class="material-icons">my_location</i>Inicio</a></li>
+        <li><div class="divider"></div></li>
+    <li><a href="chat.html" class="waves-effect waves-blue"><i class="material-icons">question_answer</i>Chat & report</a></li>
+        <li><div class="divider"></div></li>
+    <li><a href="estadoBicis.html" class="waves-effect waves-blue"><i class="material-icons">search</i>Estado bicicletas</a></li>
+
+  </ul>
+  <a href="#" data-activates="slide-out" class="button-collapse btn-floating btn-large waves-effect waves-light blue">
+    <i class="material-icons">&#xE5D2;</i>
+  </a>
+
+  <!--FIN MENU LATERAL -->
+  <div id="cuerpo" class="page centered">
+    <div class="container">
+      <div id="header">
+        <!--TODO borrar este header? -->
+        <div id="wrapper">
+          <div class="scroller">
+            <div id="contenidoCuerpo">
+              <!--<center>
+                <div id="debug">
+                  este es el debug
+                </div>
+              </center>-->
+
+              <div class="input-field col s6">
+                <input type="number" id="numberBici" min="1" max="999" class="validate" onkeydown="if (event.keyCode == 13)document.getElementById('send-btn').click()" >
+                <label for="numberBici" data-error="1-999">Número de la bici*</label>
+              </div>
+              <a class="waves-effect waves-light btn blue disabled" id="send-btn" >Buscar</a>
+              <!-- Preloader -->
+              <center>
+                <div id="preloader" class="preloader-wrapper big active">
+                  <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </center>
+              <!--  END Preloader -->
+
+
+              <br />
+              <table id="tablaDatos" class="striped">
+                <thead>
+                  <tr>
+                    <th>Día</th>
+                    <th>Estado</th>
+                    <th>Info adicional</th>
+                  </tr>
+                </thead>
+
+                <tbody id="tablaBodyDatos">
+
+                </tbody>
+              </table>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <script type="text/javascript" src="cordova.js"></script>
+  <script charset="utf-8" type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/functions.js"></script>
+  <script type="text/javascript" src="js/estadoBicis.js"></script>
+
+</body>
+
+</html>
