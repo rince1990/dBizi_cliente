@@ -36,13 +36,8 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
   $('#debug').text("device ready");
-  //TODO instalar cordova.plugins diagnotics para decirle al usuario que active el gps
-  /*cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled){
-    $('#debug').text("GPS location is " + (enabled ? "enabled" : "disabled"));
-}, function(error){
-    $('#debug').text("The following error occurred: "+error);
-});*/
-  navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  var options = {maximumAge: 0, timeout: 10000, enableHighAccuracy:true};
+  navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
 }
 
 function onSuccess(position) {
@@ -52,7 +47,7 @@ function onSuccess(position) {
 
 function onError(error) {
   $('#debug').text("error");
-  alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+  alert('El GPS esta desactivado o la señal es demasiado debil, prueba a activar el GPS y reiniciar la aplicación');
 }
 
 
@@ -80,20 +75,18 @@ function initialize(lat, long) {
   var markerUser = new google.maps.Marker({
     position: myLatlng,
     map: map,
-    label: "1",
-    //TODO  Change url image to locally
-    icon: 'https://image.ibb.co/dxZFkk/persona.png',
+    icon :'images/location-icon-blue.png'
   });
 
 
   //obtiene todos las estaciones de servicio actuales
-  $.ajax({
-    url: 'http://dbizi.esy.es/index.php/datos/publicarDatos',
+  $.ajax({ //TODO repeat this action every X secconds and update markers text
+    url: 'http://ec2-35-176-101-5.eu-west-2.compute.amazonaws.com/index.php/Datos/publicarDatos',
     type: 'POST',
     data: {},
     dataType: 'json',
     error: function(jqXHR, text_status, strError) {
-      alert("no connection");
+      alert("No se pudieron obtener las estaciones del servidor");
     },
     timeout: 60000,
     success: function(data) {
@@ -108,44 +101,43 @@ function initialize(lat, long) {
 
       $.each(estaciones, function(index, estacion) {
         //ponemos el marcador de la estacion
-        var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(estacion.latitude, estacion.longitude),
-          map: map,
-          //TODO  Change url image to locally
-          icon: 'https://image.ibb.co/eUnwrQ/rsz_536_200.png',
-          //label: element.number,
-          title: estacion.name
-        });
+        if (estacion.name != 'Nave') { //Existe una estacion llamada nave en pamplona, fallo de dBizi)
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(estacion.latitude, estacion.longitude),
+            map: map,
+            icon : 'images/rsz_dbizi_localizadorparadas.png',
+            title: estacion.name
+          });
 
-        //Creamos el infowindow
-        var contentString = '<div id="content">' +
-          '<div id="siteNotice">' +
-          '</div>' +
-          '<h3>' + estacion.name + '</h3>' +
-          '<div id="bodyContent">' +
-          '<p><b>' + estacion.locked + ' bicicletas disponibles</b></p>' +
-          '<p><b>' + estacion.free + ' bases libres</b></p>' +
-          '</div>' +
-          '</div>';
-
-
-        marker.addListener('click', function() {
-          infowindow.setContent(contentString);
-          infowindow.open(map, marker);
-        });
+          //Creamos el infowindow
+          var contentString = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h3>' + estacion.name + '</h3>' +
+            '<div id="bodyContent">' +
+            '<p><b>' + estacion.locked + ' bicicletas disponibles</b></p>' +
+            '<p><b>' + estacion.free + ' bases libres</b></p>' +
+            '</div>' +
+            '</div>';
 
 
-        //calculamos la estacion más cercana
-        //var distancia= getDistanceFromLatLonInKm(lat,long,estacion.latitude,estacion.longitude);
-        var distancia = getDistanceFromLatLonInKm(lat, long, estacion.latitude, estacion.longitude);
-        if (distancia < estacionCercana.distancia) {
-          estacionCercana.distancia = distancia;
-          estacionCercana.nombre = estacion.name;
-          estacionCercana.bicis = estacion.locked;
-          estacionCercana.bases = estacion.free;
-          markerCercano = marker;
+          marker.addListener('click', function() {
+            infowindow.setContent(contentString);
+            infowindow.open(map, marker);
+          });
+
+
+          //calculamos la estacion más cercana
+          //var distancia= getDistanceFromLatLonInKm(lat,long,estacion.latitude,estacion.longitude);
+          var distancia = getDistanceFromLatLonInKm(lat, long, estacion.latitude, estacion.longitude);
+          if (distancia < estacionCercana.distancia) {
+            estacionCercana.distancia = distancia;
+            estacionCercana.nombre = estacion.name;
+            estacionCercana.bicis = estacion.locked;
+            estacionCercana.bases = estacion.free;
+            markerCercano = marker;
+          }
         }
-
       });
 
       $('#nombreCercana').text(estacionCercana.nombre);
@@ -169,18 +161,6 @@ function initialize(lat, long) {
 
 }
 
-/* MENU LATERAL */
-
-
-// Initialize collapse button
-$(".button-collapse").sideNav({
-  menuWidth: "50%", // Default is 300
-});
-// Initialize collapsible (uncomment the line below if you use the dropdown variation)
-//$('.collapsible').collapsible();
-
-
-/* MENU LATERAL */
 
 
 //obtiene la distancia entre 2 puntos cartesianos mediante la formula Haversina

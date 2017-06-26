@@ -149,3 +149,50 @@ h1 {
 
 
 /* FIN MENU LATERAL */
+
+#message_box{
+  border-radius: 5px;
+  border: 2px solid #2196f3;
+  height: 250px;
+  overflow:auto;
+}
+#menuIcon{
+  max-width: 100%;
+max-height: 100%;
+}
+
+ul.dropdown-content.select-dropdown li span {
+    color: #2196f3; /* no need for !important :) */
+}
+
+.tabs .indicator {
+    background-color: #2196f3 !important;
+}
+.tabs .tab a{
+    color:  #2196f3 !important;
+}
+.tabs .tab a:hover,.tabs .tab a.active {
+	background-color:transparent;
+	color:  #2196f3 !important;
+}
+.tabs .tab.disabled a,.tabs .tab.disabled a:hover {
+	color:  #2196f3 !important;
+}
+
+/* label focus color */
+.input-field input[type=text]:focus + label,
+.input-field input[type=number]:focus + label
+ {
+  color: #2196f3 !important;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus,
+.input-field input[type=number]:focus,
+ {
+  border-bottom: 1px solid #2196f3 !important;
+  box-shadow: 0 1px 0 0 #2196f3 !important;
+}
+/* icon prefix focus color */
+  .input-field .prefix.active {
+    color: #2196f3 !important;
+  }
